@@ -1,0 +1,15 @@
+﻿Implement a Resp protocol parser library
+
+The protocol should be parsed as defined in the following url https://redis.io/docs/reference/protocol-spec/
+All models are defined in the RespProtocol project
+The parser should have a method that receives a stream of bytes in some form containing one of the resp types, and returns IRespType? (return null only for null bulk strings)
+Note that string values are utf8 encoded
+If the incoming message is invalid throw an ArgumentException
+
+Priorities:
+1. Correctnes for all types except arrays
+2. Parsing code is easy to read
+3. The parser is be easy to use by the client code
+4. Correctness for arrays (Bonus)
+5. Correctness for nested arrays (Bonus)
+6. Try to use less memory (Bonus)
