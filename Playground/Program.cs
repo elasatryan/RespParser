@@ -1,5 +1,8 @@
 ﻿using RespProtocol;
 
+using RespParser;
+using System.Text;
+
 namespace Playground
 {
     internal class Program
@@ -21,17 +24,24 @@ namespace Playground
 
         static void Main(string[] args)
         {
-            var integer = new RespInteger(1);
-            var simpleString = new RespSimpleString("simple");
-            var bulkString = new RespBulkString("bulk");
-            var error = new RespError("error");
-            var array = new RespArray(new IRespType?[]{ integer, simpleString, bulkString, error, null });
+            UTF8Encoding uTF8Encoding = new UTF8Encoding();
+            Parser parser = new Parser();
 
-            Console.WriteLine(integer);
-            Console.WriteLine(simpleString);
-            Console.WriteLine(bulkString);
-            Console.WriteLine(error);
-            Console.WriteLine(array);
+            var test1 = parser.Parse(uTF8Encoding.GetBytes("-Error message1\r\n*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n+OK\r\n$0\r\n\r\n$-1\r\n\r\n"));
+            var test2 = parser.Parse(uTF8Encoding.GetBytes(":3\r\n$-1\r\n\r\n*2\r\n$5\r\nhello\r\n$5\r\nworld\r\n$5\r\nhello\r\n-Error message1\r\n+OK\r\n$0\r\n\r\n"));
+            //var integer = new RespInteger(1);
+            //var simpleString = new RespSimpleString("simple");
+            //var bulkString = new RespBulkString("bulk");
+            //var error = new RespError("error");
+            //var array = new RespArray(new IRespType?[]{ integer, simpleString, bulkString, error, null });
+
+
+
+            //Console.WriteLine(integer);
+            //Console.WriteLine(simpleString);
+            //Console.WriteLine(bulkString);
+            //Console.WriteLine(error);
+            //Console.WriteLine(array);
         }
     }
 }
